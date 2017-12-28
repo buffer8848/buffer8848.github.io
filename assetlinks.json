@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "de.lufthansa.os.player",
+    "sha256_cert_fingerprints":
+    ["3E:19:44:2D:BC:D5:2B:0C:62:F2:31:55:46:97:77:06:7C:BB:18:E7:C3:E6:4D:BE:69:83:5B:04:D0:6A:B8:BD"]
+  }
+}]
