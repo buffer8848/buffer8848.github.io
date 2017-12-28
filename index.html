@@ -1,42 +1,89 @@
----
-layout: page
-description: "Thinking will not overcome fear but action will."
----
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>demo</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<style>
+*{margin:0;padding:0;}
+.g-doc{overflow:hidden;}
+.m-100{width:100%;overflow:hidden;}
+.btn,.btnA{display:block;margin:5px 3%;line-height:35px;background-color:#05a;border-radius:3px;color:#ffffff;font-size:12px;float:left;width:94%;text-align:center;}
+.m-tip{color:#000;font-size:18px;font-weight:bold;margin:5px 3%;}
+</style>
+</head>
+<body>
 
-{% for post in paginator.posts %}
-<div class="post-preview">
-    <a href="{{ post.url | prepend: site.baseurl }}">
-        <h2 class="post-title">
-            {{ post.title }}
-        </h2>
-        {% if post.subtitle %}
-        <h3 class="post-subtitle">
-            {{ post.subtitle }}
-        </h3>
-        {% endif %}
-        <div class="post-content-preview">
-            {{ post.content | strip_html | truncate:200 }}
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
-    </p>
-</div>
-<hr>
-{% endfor %}
+<!-- <script src="http://js.3conline.com/wap/pcauto/2016/js/callapp.js" charset="utf-8"></script> -->
+<script type="text/javascript">
+function loadCallapp(fn) {
+	fn = fn || function() {};
+	if (window.lib && typeof(window.lib.callapp) != "undefined") {
+		fn();
+	}else {
+		var script = document.createElement("script");
+		script.setAttribute("type", "text/javascript");
+		script.setAttribute("src", "callapp.js");
+		document.getElementsByTagName("head")[0].appendChild(script);
+		script.onload = script.onreadystatechange = function() {
+			var f = script.readyState;
+			if (f && f != "loaded" && f != "complete") return;
+			script.onload = script.onreadystatechange = null;
+			fn();
+		};
+	};
+}
+// document.getElementById("aaa").setAttribute("data-scheme","hululiapp://hululi/?act=webview&url=" + encodeURIComponent("http://192.168.199.53:3000/src/act/1604gx/inapp.html"));
+document.getElementById("aaa").setAttribute("data-scheme","hululiapp://hululi/?act=webview&url=" + encodeURIComponent("http://192.168.199.53:3000/src/act/1604gx/inapp.html"));
+/*
+ * 加载js
+ * fn {Function || variable} : 如果该函数或者变量已经定义，则直接调用回调函数；否则加载指定js
+ * src {String}: 要加载的js地址
+ * callback {Function} : js加载完毕后的回调函数
+ */
+function needJS(fn, src, callback) {
+	callback = callback || function() {};
+	if (fn) return callback(false);
+	var scripts = document.___needJS__ || (document.___needJS__ = []);
+	var script = scripts[src] || (scripts[src] = {
+		loaded: false,
+		callbacks: []
+	});
+	if (script.loaded) return callback(false);
+	var cbs = script.callbacks;
+	if (cbs.push(callback) == 1) {
+		var js = document.createElement("script");
+		js.onload = js.onreadystatechange = function() {
+			var st = js.readyState;
+			if (st && st != "loaded" && st != "complete") return;
+			js.onload = js.onreadystatechange = null;
+			script.loaded = true;
+			for (var i = 0; i < cbs.length; i++) cbs[i](true);
+		};
+		js.src = src;
+		document.getElementsByTagName("head")[0].appendChild(js);
+	}
+}
+needJS("", "callapp.js", function() {
+	var as = document.querySelectorAll("#Jdoc a");
+	for (var i = 0; i < as.length; i++) {
+		(function (m) {
+			as[m].addEventListener("click",function(){
+				var _this = this;
+				lib.callapp({
+					"scheme":"hululiapp",
+					"package":"cn.hululi.android.browser",
+					"schemeUrl":_this.getAttribute("data-scheme"),
+					"dowmloadUrl":"http://a.app.qq.com/o/simple.jsp?pkgname=cn.hululi.hll"
+				});
+			},false);
+		})(i)
+	};
+})
+</script>
 
-<!-- Pager -->
-{% if paginator.total_pages > 1 %}
-<ul class="pager">
-    {% if paginator.previous_page %}
-    <li class="previous">
-        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
-    </li>
-    {% endif %}
-    {% if paginator.next_page %}
-    <li class="next">
-        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
-    </li>
-    {% endif %}
-</ul>
-{% endif %}
+</body>
+</html>
