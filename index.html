@@ -70,22 +70,11 @@ function loadCallapp(fn) {
 	fn = fn || function() {};
 	if (window.lib && typeof(window.lib.callapp) != "undefined") {
 		fn();
-	}else {
-		var script = document.createElement("script");
-		script.setAttribute("type", "text/javascript");
-		script.setAttribute("src", "callapp.js");
-		document.getElementsByTagName("head")[0].appendChild(script);
-		script.onload = script.onreadystatechange = function() {
-			var f = script.readyState;
-			if (f && f != "loaded" && f != "complete") return;
-			script.onload = script.onreadystatechange = null;
-			fn();
-		};
-	};
+	}
 }
 
 lib.callapp({
-	"scheme":"ice",
+	"scheme":"com.huawei.pcasistant",
 	"package":"com.huawei.pcassistant",
 	"schemeUrl":"com.huawei.pcasistant://mainactivity?",
 	"cachedUrl":"img/favicon.ico",
