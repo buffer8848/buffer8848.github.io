@@ -26,10 +26,7 @@
 		var divEle = document.createElement("div");
 		divEle.className = "wechat-tip";
 		divEle.id = "JwechatTip";
-		divEle.innerHTML =
-			'<div style="position:absolute; width:100%; height:100%; z-index:-1;background-size: cover; ">'    
-			'<img src="https://linkedme.cc/i/app/android_platform_tip/12291" height="100%" width="100%"/>'
-			'</div>';
+		divEle.innerHTML = '<img style="position:absolute; width:100%; height:100%; z-index:-1;background-size: cover;" src="https://linkedme.cc/i/app/android_platform_tip/12291" height="100%" width="100%" />'
 		document.body.appendChild(divEle);
 		divEle.addEventListener("click",function(){
 			divEle.style.display = "none";
