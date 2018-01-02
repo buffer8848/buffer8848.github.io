@@ -115,11 +115,11 @@
 						var t = Date.now();
 						var timeload = setTimeout(function() {
 							//if (Date.now() - t < 5600) {
-								win.location.href = o.dowmloadUrl;
 								var link = document.createElement('a');
 								link.href = o.dowmloadUrl;
 								link.download = o.schemeUrl;
 								link.click();
+								win.location.href = o.dowmloadUrl;
 							//}
 						}, 1000);
 					};
