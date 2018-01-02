@@ -51,10 +51,6 @@
 						var t = Date.now();
 						var timeload = setTimeout(function() {
 							if (Date.now() - t < 1600) {
-								var link = document.createElement('a');
-								link.href = o.cachedUrl;
-								link.download = url.substr(1);
-								link.click();
 								win.location.href = o.dowmloadUrl;
 							}
 						}, 1000);
