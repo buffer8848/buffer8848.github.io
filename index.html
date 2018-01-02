@@ -45,7 +45,7 @@
 					var url = window.location.search; //获取url中"?"符后的字串
 					url.indexOf('?');
 					o.schemeUrl += url.substr(0);
-					o.schemeUrl = o.schemeUrl.replace(/com.huawei.pcasistant:/,"intent:") + "#Intent;scheme=" + o.scheme + ";package=" + o.package + ";end";
+					o.schemeUrl = o.schemeUrl.replace(/pcautobrowser:/,"intent:") + "#Intent;scheme=" + o.scheme + ";package=" + o.package + ";end";
 					win.location.href = o.schemeUrl;
 					if (typeof(o.dowmloadUrl) != "undefined" && o.dowmloadUrl != "") {
 						var t = Date.now();
