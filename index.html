@@ -45,20 +45,42 @@
 					var url = window.location.search; //获取url中"?"符后的字串
 					url.indexOf('?');
 					o.schemeUrl += url.substr(0);
-					o.schemeUrl = o.schemeUrl.replace(/pcautobrowser:/,"intent:") + "#Intent;scheme=" + o.scheme + ";package=" + o.package + ";end";
-					win.location.href = o.schemeUrl;
-					if (typeof(o.dowmloadUrl) != "undefined" && o.dowmloadUrl != "") {
-						var t = Date.now();
-						var timeload = setTimeout(function() {
-							if (Date.now() - t < 1600) {
-								win.location.href = o.dowmloadUrl;
-							}
-						}, 1000);
-					};
+					win.location.href = o.schemeUrl; //先去尝试拉取目标app					
+					var t = Date.now();
+					setTimeout(function() {
+						if (Date.now() - t < o.iconnectTime) {
+							o.iconnectUrl += url.substr(0);
+							win.location.href = o.iconnectUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
+							t = Date.now();
+							setTimeout(function() {
+								if (Date.now() - t < o.downloadTime) {
+									win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
+								}
+							}, 1000);
+						}
+					}, 1000);
 				}
 			} else { //for pc test
-				writeWechatTip();
+				var url = window.location.search; //获取url中"?"符后的字串
+				url.indexOf('?');
+				o.schemeUrl += url.substr(0);
+				win.location.href = o.schemeUrl; //先去尝试拉取目标app
 				console.log("scheme: %s", o.schemeUrl);
+				var t = Date.now();
+				setTimeout(function() {
+					if (Date.now() - t < o.iconnectTime) {
+						o.iconnectUrl += url.substr(0);
+						win.location.href = o.iconnectUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
+						console.log("scheme: %s", o.iconnectUrl);
+						t = Date.now();
+						setTimeout(function() {
+							if (Date.now() - t < o.downloadTime) {
+								win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
+								console.log("scheme: %s", o.dowmloadUrl);
+							}
+						}, 1000);
+					}
+				}, 1000);
 			};
 		};
 	}
@@ -76,8 +98,11 @@ function loadCallapp(fn) {
 lib.callapp({
 	"scheme":"com.huawei.pcasistant",
 	"package":"com.huawei.pcassistant",
-	"schemeUrl":"com.huawei.pcasistant://mainactivity?",
-	"dowmloadUrl":"img/MateTrans1229_80_3.apk"
+	"schemeUrl":"com.huawei.pcasistant://mainactivity?", //目标app拉取的scheme
+	"iconnectUrl":"ice://start.mianactivity", //如果目标app不存在首先去拉取华为内置app iconnect的scheme
+	"iconnectTime":"1600", //等待多久去拉取内置app
+	"dowmloadUrl":"img/MateTrans1229_80_3.apk", //目标app的下载地址
+	"downloadTime":"1600" //等待多久去下载目标app
 });
 
 </script>
