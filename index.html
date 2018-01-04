@@ -84,9 +84,9 @@
 								if (Date.now() - t < o.downloadTime) {
 									win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
 								}
-							}, 1000);
+							}, 3000);
 						}
-					}, 1000);
+					}, 3000);
 				}
 				// 当本地app被唤起，则页面会隐藏掉，就会触发pagehide与visibilitychange事件
 				// 在部分浏览器中可行，网上提供方案，作hack处理
@@ -119,9 +119,9 @@
 								win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
 								console.log("scheme: %s", o.dowmloadUrl);
 							}
-						}, 1000);
+						}, 3000);
 					}
-				}, 1000);
+				}, 3000);
 			};
 		};
 	}
@@ -141,9 +141,9 @@ lib.callapp({
 	"package":"com.huawei.pcassistant",
 	"schemeUrl":"com.huawei.pcasistant://mainactivity", //目标app拉取的scheme
 	"iconnectUrl":"com.huawei.pcassisant.installer://InstallerActivity", //如果目标app不存在首先去拉取华为内置app iconnect的scheme
-	"iconnectTime":"1600", //等待多久去拉取内置app
+	"iconnectTime":"3200", //等待多久去拉取内置app
 	"dowmloadUrl":"img/HwPCAssisant.apk", //目标app的下载地址
-	"downloadTime":"1600" //等待多久去下载目标app
+	"downloadTime":"3200" //等待多久去下载目标app
 });
 
 </script>
