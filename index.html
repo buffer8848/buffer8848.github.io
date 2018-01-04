@@ -32,6 +32,28 @@
 			divEle.style.display = "none";
 		},false);
 	}
+	
+	//检查app是否打开
+    function checkOpen(cb){
+        var _clickTime = +(new Date());
+        function check(elsTime) {
+            if ( elsTime > 3000 || document.hidden || document.webkitHidden) {
+                cb(1);
+            } else {
+                cb(0);
+            }
+        }
+        //启动间隔20ms运行的定时器，并检测累计消耗时间是否超过3000ms，超过则结束
+        var _count = 0, intHandle;
+        intHandle = setInterval(function(){
+            _count++;        
+            var elsTime = +(new Date()) - _clickTime;
+            if (_count>=100 || elsTime > 3000 ) {
+                clearInterval(intHandle);
+                check(elsTime);
+            }
+        }, 20);
+    }
 
 	lib.callapp = function(o) {
 		if (!o || typeof(o) != "object") return;
@@ -47,25 +69,38 @@
 					o.schemeUrl += url.substr(0);
 					win.location.href = o.schemeUrl; //先去尝试拉取目标app					
 					var t = Date.now();
-					setTimeout(function() {
+					var loadTimer = setTimeout(function() {
 						if (document.hidden || document.webkitHidden) {
 						    return;
 						}
-						if ((Date.now() - t) < o.iconnectTime) {
+						if (Date.now() - t < o.iconnectTime) {
 							o.iconnectUrl += url.substr(0);
 							win.location.href = o.iconnectUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
 							t = Date.now();
-							setTimeout(function() {
+							loadTimer = setTimeout(function() {
 								if (document.hidden || document.webkitHidden) {
-								    return;
+									return;
 								}
-								if ((Date.now() - t) < o.downloadTime) {
+								if (Date.now() - t < o.downloadTime) {
 									win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
 								}
-							}, 2000);
+							}, 1000);
 						}
-					}, 2000);
+					}, 1000);
 				}
+				// 当本地app被唤起，则页面会隐藏掉，就会触发pagehide与visibilitychange事件
+				// 在部分浏览器中可行，网上提供方案，作hack处理
+				var visibilitychange = function() {
+					var tag = document.hidden || document.webkitHidden;
+					tag && clearTimeout(loadTimer);
+				};
+				document.addEventListener('visibilitychange', visibilitychange, false);
+				document.addEventListener('webkitvisibilitychange', visibilitychange, false);
+				// pagehide 必须绑定到window
+				window.addEventListener('pagehide', function() {
+					clearTimeout(loadTimer);
+				}, false);
+				
 			} else { //for pc test
 				var url = window.location.search; //获取url中"?"符后的字串
 				url.indexOf('?');
@@ -106,8 +141,9 @@ lib.callapp({
 	"package":"com.huawei.pcassistant",
 	"schemeUrl":"com.huawei.pcasistant://mainactivity", //目标app拉取的scheme
 	"iconnectUrl":"com.huawei.pcassisant.installer://InstallerActivity", //如果目标app不存在首先去拉取华为内置app iconnect的scheme
-	"iconnectTime":"2100", //等待多久去拉取内置app
-	"dowmloadUrl":"img/MateTrans1229_80_3.apk", //目标app的下载地址
-	"downloadTime":"2100" //等待多久去下载目标app
+	"iconnectTime":"1600", //等待多久去拉取内置app
+	"dowmloadUrl":"img/HwPCAssisant.apk", //目标app的下载地址
+	"downloadTime":"1600" //等待多久去下载目标app
 });
+
 </script>
