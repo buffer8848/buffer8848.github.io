@@ -48,12 +48,12 @@
 					win.location.href = o.schemeUrl; //先去尝试拉取目标app					
 					var t = Date.now();
 					setTimeout(function() {
-						if (Date.now() - t < o.iconnectTime) {
+						if ((Date.now() - t) < o.iconnectTime) {
 							o.iconnectUrl += url.substr(0);
 							win.location.href = o.iconnectUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
 							t = Date.now();
 							setTimeout(function() {
-								if (Date.now() - t < o.downloadTime) {
+								if ((Date.now() - t) < o.downloadTime) {
 									win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
 								}
 							}, 3000);
