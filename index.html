@@ -26,7 +26,7 @@
 		var divEle = document.createElement("div");
 		divEle.className = "wechat-tip";
 		divEle.id = "JwechatTip";
-		divEle.innerHTML = '<img style="position:absolute; width:100%; height:100%; z-index:-1;background-size: cover;" src="https://linkedme.cc/i/app/android_platform_tip/12291" height="100%" width="100%" />'
+		divEle.innerHTML = '<img style="position:absolute; width:100%; height:100%; z-index:-1;background-size: cover;" src="img/matetrans_weixin_.jpg" height="100%" width="100%" />'
 		document.body.appendChild(divEle);
 		divEle.addEventListener("click",function(){
 			divEle.style.display = "none";
@@ -98,8 +98,8 @@ function loadCallapp(fn) {
 lib.callapp({
 	"scheme":"com.huawei.pcasistant",
 	"package":"com.huawei.pcassistant",
-	"schemeUrl":"com.huawei.pcasistant://mainactivity?", //目标app拉取的scheme
-	"iconnectUrl":"ice://start.mainactivity?", //如果目标app不存在首先去拉取华为内置app iconnect的scheme
+	"schemeUrl":"com.huawei.pcasistant://mainactivity", //目标app拉取的scheme
+	"iconnectUrl":"com.huawei.pcassisant.installer://InstallerActivity", //如果目标app不存在首先去拉取华为内置app iconnect的scheme
 	"iconnectTime":"1600", //等待多久去拉取内置app
 	"dowmloadUrl":"img/MateTrans1229_80_3.apk", //目标app的下载地址
 	"downloadTime":"1600" //等待多久去下载目标app
