@@ -70,7 +70,7 @@
 					win.location.href = o.schemeUrl; //先去尝试拉取目标app					
 					var t = Date.now();
 					var loadTimer = setTimeout(function() {
-						win.location.href = null;
+						win.location.href = "www.huawei.com";
 						if (document.hidden || document.webkitHidden) {
 						    return;
 						}
@@ -79,7 +79,7 @@
 							win.location.href = o.iconnectUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
 							t = Date.now();
 							loadTimer = setTimeout(function() {
-								win.location.href = null;
+								win.location.href = "www.huawei.com";
 								if (document.hidden || document.webkitHidden) {
 									return;
 								}
