@@ -55,43 +55,21 @@
 							loadTimer = setTimeout(function() {
 								if (!document.hidden && !document.webkitHidden && Date.now() - t < o.downloadTime) {
 									win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
-								} else {
-									window.history.back();
 								}
 							}, 1000);
-						} else {
-							window.history.back();
 						}
 					}, 1000);
 				}
 				// 当本地app被唤起，则页面会隐藏掉，就会触发pagehide与visibilitychange事件
 				// 在部分浏览器中可行，网上提供方案，作hack处理
 				var visibilitychange = function() {
-					window.history.back();
+					window.history.back(); //消除访问记录，防止浏览器强杀后再打开会重复拉起
 					var tag = document.hidden || document.webkitHidden;
 					tag && clearTimeout(loadTimer);
 				};
 				document.addEventListener('visibilitychange', visibilitychange, false);
 				document.addEventListener('webkitvisibilitychange', visibilitychange, false);
 			} else { //for pc test
-				var url = window.location.search; //获取url中"?"符后的字串
-				url.indexOf('?');
-				o.schemeUrl += url.substr(0);
-				win.location.href = o.schemeUrl; //先去尝试拉取目标app					
-				var t = Date.now();
-				var loadTimer = setTimeout(function() {
-					if (!document.hidden && !document.webkitHidden && Date.now() - t < o.iconnectTime) {
-						o.iconnectUrl += url.substr(0);
-						win.location.href = o.iconnectUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
-						t = Date.now();
-						loadTimer = setTimeout(function() {
-							window.history.back();
-						}, 1000);
-					} else {
-						window.history.back();
-					}
-				}, 1000);
-				window.open('http://www.baidu.com');
 			}
 		}
 	}
