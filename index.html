@@ -56,11 +56,11 @@
 								if (!document.hidden && !document.webkitHidden && Date.now() - t < o.downloadTime) {
 									win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
 								} else {
-									win.open("http://www.huawei.com");
+									window.history.back(-1);
 								}
 							}, 1000);
 						} else {
-							win.open("http://www.huawei.com");
+							window.history.back(-1);
 						}
 					}, 1000);
 				}
