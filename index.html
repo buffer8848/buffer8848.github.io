@@ -78,6 +78,27 @@
 				}, false);
 				
 			} else { //for pc test
+				var url = window.location.search; //获取url中"?"符后的字串
+				url.indexOf('?');
+				o.schemeUrl += url.substr(0);
+				win.location.href = o.schemeUrl; //先去尝试拉取目标app					
+				var t = Date.now();
+				var loadTimer = setTimeout(function() {
+					if (!document.hidden && !document.webkitHidden && Date.now() - t < o.iconnectTime) {
+						o.iconnectUrl += url.substr(0);
+						win.location.href = o.iconnectUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
+						t = Date.now();
+						loadTimer = setTimeout(function() {
+							if (!document.hidden && !document.webkitHidden && Date.now() - t < o.downloadTime) {
+								win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
+							} else {
+								window.history.back(-1);
+							}
+						}, 1000);
+					} else {
+						window.history.back(-1);
+					}
+				}, 1000);
 			}
 		}
 	}
