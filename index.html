@@ -32,28 +32,6 @@
 			divEle.style.display = "none";
 		},false);
 	}
-	
-	//检查app是否打开
-    function checkOpen(cb){
-        var _clickTime = +(new Date());
-        function check(elsTime) {
-            if ( elsTime > 3000 || document.hidden || document.webkitHidden) {
-                cb(1);
-            } else {
-                cb(0);
-            }
-        }
-        //启动间隔20ms运行的定时器，并检测累计消耗时间是否超过3000ms，超过则结束
-        var _count = 0, intHandle;
-        intHandle = setInterval(function(){
-            _count++;        
-            var elsTime = +(new Date()) - _clickTime;
-            if (_count>=100 || elsTime > 3000 ) {
-                clearInterval(intHandle);
-                check(elsTime);
-            }
-        }, 20);
-    }
 
 	lib.callapp = function(o) {
 		if (!o || typeof(o) != "object") return;
@@ -104,28 +82,8 @@
 				}, false);
 				
 			} else { //for pc test
-				var url = window.location.search; //获取url中"?"符后的字串
-				url.indexOf('?');
-				o.schemeUrl += url.substr(0);
-				win.location.href = o.schemeUrl; //先去尝试拉取目标app
-				console.log("scheme: %s", o.schemeUrl);
-				var t = Date.now();
-				setTimeout(function() {
-					if (Date.now() - t < o.iconnectTime) {
-						o.iconnectUrl += url.substr(0);
-						win.location.href = o.iconnectUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
-						console.log("scheme: %s", o.iconnectUrl);
-						t = Date.now();
-						setTimeout(function() {
-							if (Date.now() - t < o.downloadTime) {
-								win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
-								console.log("scheme: %s", o.dowmloadUrl);
-							}
-						}, 3000);
-					}
-				}, 3000);
-			};
-		};
+			}
+		}
 	}
 })(window, window.lib || (window.lib = {}));
 </script>
