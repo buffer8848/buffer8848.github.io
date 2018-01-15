@@ -26,7 +26,7 @@
 		var divEle = document.createElement("div");
 		divEle.className = "wechat-tip";
 		divEle.id = "JwechatTip";
-		divEle.innerHTML = '<img style="width:100%; height:100%; z-index:-1;background-size: cover;" src="http://consumer.huawei.com/content/dam/huawei-cbg-site/greate-china/cn/support/applinks/web.png" />'
+		divEle.innerHTML = '<img style="width:100%; height:100%; z-index:-1;background-size: cover;" src="http://consumer.huawei.com/content/dam/huawei-cbg-site/en/support/applinks/web_en.png"/>'
 		document.body.appendChild(divEle);
 		divEle.addEventListener("click",function(){
 			divEle.style.display = "none";
@@ -88,7 +88,7 @@ lib.callapp({
 	"schemeUrl":"com.huawei.pcassistant://mainactivity", //目标app拉取的scheme
 	"iconnectUrl":"com.huawei.pcassistant.installer://InstallerActivity", //如果目标app不存在首先去拉取华为内置app iconnect的scheme
 	"iconnectTime":"1200", //等待多久去拉取内置app
-	"dowmloadUrl":"http://consumer.huawei.com/content/dam/huawei-cbg-site/greate-china/cn/support/applinks/HwPCAssistant.apk", //目标app的下载地址
+	"dowmloadUrl":"http://consumer.huawei.com/content/dam/huawei-cbg-site/en/support/applinks/HwPCAssistant.apk", //目标app的下载地址
 	"downloadTime":"1200" //等待多久去下载目标app
 });
 
