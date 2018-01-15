@@ -26,7 +26,7 @@
 		var divEle = document.createElement("div");
 		divEle.className = "wechat-tip";
 		divEle.id = "JwechatTip";
-		divEle.innerHTML = '<img style="position:absolute; width:100%; height:100%; z-index:-1;background-size: cover;" src="img/web.png" height="100%" width="100%" />'
+		divEle.innerHTML = '<img style="width:100%; height:100%; z-index:-1;background-size: cover;" src="http://consumer.huawei.com/content/dam/huawei-cbg-site/cn/support/applinks/web_en.png" />'
 		document.body.appendChild(divEle);
 		divEle.addEventListener("click",function(){
 			divEle.style.display = "none";
@@ -38,28 +38,27 @@
 		if (typeof(o.scheme) == "undefined" || o.scheme == "") return;
 		if (typeof(o.package) == "undefined" || o.package == "") return;
 		if (typeof(o.schemeUrl) != "undefined" && o.schemeUrl != "") {
-			if (browser.isAndroid) {
-				if (browser.isWechat) {
-					writeWechatTip();
-				} else {
-					var url = window.location.search; //获取url中"?"符后的字串
-					url.indexOf('?');
-					o.schemeUrl += url.substr(0);
-					win.location.href = o.schemeUrl; //先去尝试拉取目标app					
-					var t = Date.now();
-					var loadTimer = setTimeout(function() {
-						if (!document.hidden && !document.webkitHidden && Date.now() - t < o.iconnectTime) {
-							o.iconnectUrl += url.substr(0);
-							win.location.href = o.iconnectUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
-							t = Date.now();
-							loadTimer = setTimeout(function() {
-								if (!document.hidden && !document.webkitHidden && Date.now() - t < o.downloadTime) {
-									win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
-								}
-							}, 1000);
-						}
-					}, 1000);
-				}
+			//此处只服务于华为android手机无需进行机型判断了
+			if (browser.isWechat) {
+				writeWechatTip();
+			} else {
+				var url = window.location.search; //获取url中"?"符后的字串
+				url.indexOf('?');
+				o.schemeUrl += url.substr(0);
+				win.location.href = o.schemeUrl; //先去尝试拉取目标app					
+				var t = Date.now();
+				var loadTimer = setTimeout(function() {
+					if (!document.hidden && !document.webkitHidden && Date.now() - t < o.iconnectTime) {
+						o.iconnectUrl += url.substr(0);
+						win.location.href = o.iconnectUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
+						t = Date.now();
+						loadTimer = setTimeout(function() {
+							if (!document.hidden && !document.webkitHidden && Date.now() - t < o.downloadTime) {
+								win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
+							}
+						}, 1000);
+					}
+				}, 1000);
 				// 当本地app被唤起，则页面会隐藏掉，就会触发pagehide与visibilitychange事件
 				// 在部分浏览器中可行，网上提供方案，作hack处理
 				var visibilitychange = function() {
@@ -69,7 +68,6 @@
 				};
 				document.addEventListener('visibilitychange', visibilitychange, false);
 				document.addEventListener('webkitvisibilitychange', visibilitychange, false);
-			} else { //for pc test
 			}
 		}
 	}
@@ -90,7 +88,7 @@ lib.callapp({
 	"schemeUrl":"com.huawei.pcassistant://mainactivity", //目标app拉取的scheme
 	"iconnectUrl":"com.huawei.pcassistant.installer://InstallerActivity", //如果目标app不存在首先去拉取华为内置app iconnect的scheme
 	"iconnectTime":"1200", //等待多久去拉取内置app
-	"dowmloadUrl":"img/HwPCAssisant.apk", //目标app的下载地址
+	"dowmloadUrl":"http://consumer.huawei.com/content/dam/huawei-cbg-site/cn/support/applinks/HwPCAssistant.apk", //目标app的下载地址
 	"downloadTime":"1200" //等待多久去下载目标app
 });
 
