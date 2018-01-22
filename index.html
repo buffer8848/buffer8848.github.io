@@ -153,6 +153,7 @@ var countryCode = window.digitalData.page.pageInfo.countryCode
 		 * 插入微信提示
 		 */
 		function writeWechatTip() {
+			document.body = document.createElement('body'); //清空浏览器的页面，因为此页面会集成到AEM框架，为了避免显示框架的主框架菜单
 			var divEle = document.createElement("div");
 			divEle.className = "wechat-tip";
 			divEle.id = "JwechatTip";
@@ -168,16 +169,15 @@ var countryCode = window.digitalData.page.pageInfo.countryCode
 		}
 
 		lib.callapp = function(o) {
+			writeWechatTip(o);
 			if (!o || typeof(o) != "object") return;
 			if (typeof(o.scheme) == "undefined" || o.scheme == "") return;
 			if (typeof(o.package) == "undefined" || o.package == "") return;
 			if (typeof(o.schemeUrl) != "undefined" && o.schemeUrl != "") {
-				document.body = document.createElement('body'); //清空浏览器的页面，因为此页面会集成到AEM框架，为了避免显示框架的主框架菜单
 				o.dowmloadUrl += G() + G() + "-" + G() + "-" + G() + "-" + G(); //加个随机数防止浏览器缓存
 				o.imageUrl += G() + G() + "-" + G() + "-" + G() + "-" + G(); //加个随机数防止浏览器缓存
 				//此处只服务于华为android手机无需进行机型判断了
 				if (browser.isWechat) {
-					writeWechatTip(o);
 				} else {
 					var url = window.location.search; //获取url中"?"符后的字串
 					url.indexOf('?');
