@@ -151,7 +151,7 @@ var countryCode = window.digitalData.page.pageInfo.countryCode
 		/**
 		 * 插入微信提示
 		 */
-		function writeWechatTip() {
+		function writeWechatTip(o) {
 			document.body = document.createElement('body'); //清空浏览器的页面，因为此页面会集成到AEM框架，为了避免显示框架的主框架菜单
 			var divEle = document.createElement("div");
 			divEle.className = "wechat-tip";
@@ -219,8 +219,7 @@ var countryCode = window.digitalData.page.pageInfo.countryCode
 		"downloadTime":"1200", //等待多久去下载目标app
 		"imageUrl":"http://consumer.huawei.com/content/dam/huawei-cbg-site/greate-china/cn/support/applinks/web.png?"
 	});
-
-	</script>
+</script>
 
 	</div>
 	</div>
