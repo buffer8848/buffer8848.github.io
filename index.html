@@ -318,7 +318,6 @@ var countryCode = window.digitalData.page.pageInfo.countryCode
 		}
 
 		lib.callapp = function(o) {
-			document.body = document.createElement('body'); //清空浏览器的页面，因为此页面会集成到AEM框架，为了避免显示框架的主框架菜单
 			if (!o || typeof(o) != "object") return;
 			if (typeof(o.scheme) == "undefined" || o.scheme == "") return;
 			if (typeof(o.package) == "undefined" || o.package == "") return;
