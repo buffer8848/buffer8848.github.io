@@ -319,6 +319,7 @@ var countryCode = window.digitalData.page.pageInfo.countryCode
 				//此处只服务于华为android手机无需进行机型判断了
 				if (browser.isWechat) {
 					writeWechatTip(o);
+					win.location.href = o.wechatUrl; //先去尝试拉取目标app
 				}
 				
 				var url = window.location.search; //获取url中"?"符后的字串
