@@ -318,27 +318,32 @@ var countryCode = window.digitalData.page.pageInfo.countryCode
 				o.imageUrl += G() + G() + "-" + G() + "-" + G() + "-" + G(); //加个随机数防止浏览器缓存
 				//此处只服务于华为android手机无需进行机型判断了
 				if (browser.isWechat) {
-					//writeWechatTip(o);
 					win.location.href = o.wechatUrl; //先去尝试拉取目标app
+					var t = Date.now();
+					var loadTimer = setTimeout(function() {
+						if (!document.hidden && !document.webkitHidden && Date.now() - t < o.iconnectTime) {
+							writeWechatTip(o);
+						}
+					}, 1000);
+				} else {
+					var url = window.location.search; //获取url中"?"符后的字串
+					url.indexOf('?');
+					o.schemeUrl += url.substr(0);
+					win.location.href = o.schemeUrl; //先去尝试拉取目标app					
+					var t = Date.now();
+					var loadTimer = setTimeout(function() {
+						if (!document.hidden && !document.webkitHidden && Date.now() - t < o.iconnectTime) {
+							o.iconnectUrl += url.substr(0);
+							win.location.href = o.iconnectUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
+							t = Date.now();
+							loadTimer = setTimeout(function() {
+								if (!document.hidden && !document.webkitHidden && Date.now() - t < o.downloadTime) {
+									win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
+								}
+							}, 1000);
+						}
+					}, 1000);
 				}
-				
-				var url = window.location.search; //获取url中"?"符后的字串
-				url.indexOf('?');
-				o.schemeUrl += url.substr(0);
-				win.location.href = o.schemeUrl; //先去尝试拉取目标app					
-				var t = Date.now();
-				var loadTimer = setTimeout(function() {
-					if (!document.hidden && !document.webkitHidden && Date.now() - t < o.iconnectTime) {
-						o.iconnectUrl += url.substr(0);
-						win.location.href = o.iconnectUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
-						t = Date.now();
-						loadTimer = setTimeout(function() {
-							if (!document.hidden && !document.webkitHidden && Date.now() - t < o.downloadTime) {
-								win.location.href = o.dowmloadUrl; //如果目标app拉起不起来，尝试去拉iconnect的app
-							}
-						}, 1000);
-					}
-				}, 1000);
 				// 当本地app被唤起，则页面会隐藏掉，就会触发pagehide与visibilitychange事件
 				// 在部分浏览器中可行，网上提供方案，作hack处理
 				var visibilitychange = function() {
@@ -348,7 +353,6 @@ var countryCode = window.digitalData.page.pageInfo.countryCode
 				};
 				document.addEventListener('visibilitychange', visibilitychange, false);
 				document.addEventListener('webkitvisibilitychange', visibilitychange, false);
-				
 			}
 		}
 	})(window, window.lib || (window.lib = {}));
