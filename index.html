@@ -318,7 +318,7 @@ var countryCode = window.digitalData.page.pageInfo.countryCode
 				o.imageUrl += G() + G() + "-" + G() + "-" + G() + "-" + G(); //加个随机数防止浏览器缓存
 				//此处只服务于华为android手机无需进行机型判断了
 				if (browser.isWechat) {
-					writeWechatTip(o);
+					//writeWechatTip(o);
 					win.location.href = o.wechatUrl; //先去尝试拉取目标app
 				}
 				
@@ -361,7 +361,8 @@ var countryCode = window.digitalData.page.pageInfo.countryCode
 		"iconnectTime":"1200", //等待多久去拉取内置app
 		"dowmloadUrl":"http://download-c.huawei.com/download/downloadCenter?downloadId=98285&", //目标app的下载地址
 		"downloadTime":"1200", //等待多久去下载目标app
-		"imageUrl":"/content/dam/huawei-cbg-site/greate-china/cn/support/applinks/web.png?"
+		"imageUrl":"/content/dam/huawei-cbg-site/greate-china/cn/support/applinks/web.png?",
+		"wechatUrl":"http://sj.qq.com/myapp/detail.htm?apkName=com.huawei.pcassistant"
 	});
 </script>
 
